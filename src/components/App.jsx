@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { getSmallData, getBigData} from '../utils/Api';
+import Table from './Table';
 
 function App() {
   const [smallData, setSmallData] = useState([]);
@@ -30,12 +31,14 @@ function App() {
 
   return (
     <Wrapper>
-
+      {/* <SelectButtons /> */}
+      <Table smallData={smallData} bigData={bigData} active={true} />
     </Wrapper>
   );
-}
+};
 
 export default App;
+
 const Wrapper = styled.div`
 
 `;
