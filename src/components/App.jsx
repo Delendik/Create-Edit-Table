@@ -4,6 +4,7 @@ import { getSmallData, getBigData} from '../utils/Api';
 import ClipLoader from "react-spinners/ClipLoader";
 import Table from './Table';
 import SelectButtons from './SelectButtons';
+import PageSlider from './PageSlider';
 
 function App() {
   const [smallData, setSmallData] = useState([]);
@@ -11,7 +12,15 @@ function App() {
   const [isOpenTable, setIsOpenTable] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [numberOfPages, setNumberOfPages] = useState(1);
 
+  const calculatePages = (data) => {
+    if(data.length<50){
+      return
+    } 
+    setNumberOfPages(Math.ceil(data.length/50));    
+  };
+// console.log(numberOfPages)
   const loadindData = () => {
     Promise.all([
       getSmallData(),
@@ -22,6 +31,7 @@ function App() {
       if(res){
         setSmallData(smallData);
         setBigData(bigData)
+        
       }
     })
     .catch(err =>{
@@ -34,14 +44,17 @@ function App() {
 
   useEffect(() =>{
     loadindData();
+    
   }, []);
 
   const openTable = (sizeOfTable) => {
     setIsOpenTable(true);
     if(sizeOfTable==='small'){
       setData(smallData);
+      calculatePages(smallData);
     } else{
       setData(bigData);
+      calculatePages(bigData);
     }
   }
   return (
@@ -49,8 +62,10 @@ function App() {
       <Loader isLoading={loading}> 
         <ClipLoader loading={loading} size={150} />
       </Loader>
-      <SelectButtons openTable={openTable} isOpenTable={isOpenTable} />
+      <SelectButtons openTable={openTable} isOpenTable={isOpenTable} isLoading={loading} />
+      <PageSlider numberOfPages={numberOfPages} active={isOpenTable} />
       <Table data={data} active={isOpenTable} />
+      <PageSlider numberOfPages={numberOfPages} active={isOpenTable} />
     </Wrapper>
   );
 };
@@ -58,7 +73,9 @@ function App() {
 export default App;
 
 const Wrapper = styled.div`
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Loader = styled.div`
@@ -66,4 +83,10 @@ const Loader = styled.div`
   justify-content: center;
   align-items:center;
   height: 100vh;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
 `;
