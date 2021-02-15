@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import SortButton from './SortButton';
 import NewRow from './NewRow';
 
-function Table({smallData, bigData, active}) {
-  
+function Table({data, active}) {
+
   return(
-    <Wrapper>
+    <Wrapper active={active}>
       <THEAD>
         <TR>
           <TH>ID <SortButton/> </TH>
@@ -19,7 +19,7 @@ function Table({smallData, bigData, active}) {
       </THEAD>
       <TBODY>
         {
-          smallData.map(data=><NewRow key={data.id} {...data} />)
+          data.map(data=><NewRow key={`${data.id}-${data.firstName}-${data.lastName}`} {...data} />)
         }
       </TBODY>
     </Wrapper>
@@ -29,7 +29,7 @@ function Table({smallData, bigData, active}) {
 export default Table;
 
 const Wrapper = styled.table`
-
+  display: ${({active}) => active ? 'table-cell' : 'none'};
 `;
 
 const THEAD = styled.thead``;
