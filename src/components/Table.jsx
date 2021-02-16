@@ -1,20 +1,32 @@
 import styled from 'styled-components';
 import SortButton from './SortButton';
 import NewRow from './NewRow';
+import { useEffect, useState } from 'react';
 
 function Table({data, active}) {
+  const [field, setField] = useState('')
+  const [toggleSort, setToggleSort] = useState(true);
 
+  function sortByField(field) {
+    if(toggleSort){
+      return (a, b) => a[field] > b[field] ? 1 : -1;
+    }
+    return (a, b) => a[field] > b[field] ? -1 : 1;
+  };
+
+  data.sort(sortByField(field));
+  
   return(
     <Wrapper active={active}>
       <THEAD>
         <TR>
-          <TH>ID <SortButton/> </TH>
-          <TH>First Name</TH>
-          <TH>Last Name</TH>
-          <TH>Email</TH>
-          <TH>Phone</TH>
-          <TH>Address</TH>
-          <TH>Description</TH>
+          <TH>ID <SortButton value={'id'} onClick={setField} setToggleSort={setToggleSort} toggleSort={toggleSort} /> </TH>
+          <TH>First Name <SortButton value={'firstName'} onClick={setField} setToggleSort={setToggleSort} toggleSort={toggleSort} /> </TH>
+          <TH>Last Name <SortButton value={'lastName'} onClick={setField} setToggleSort={setToggleSort} toggleSort={toggleSort} /> </TH>
+          <TH>Email <SortButton value={'email'} onClick={setField} setToggleSort={setToggleSort} toggleSort={toggleSort} /> </TH>
+          <TH>Phone <SortButton value={'phone'} onClick={setField} setToggleSort={setToggleSort} toggleSort={toggleSort} /> </TH>
+          <TH>Address <SortButton value={'address'} onClick={setField} setToggleSort={setToggleSort} toggleSort={toggleSort} /> </TH>
+          <TH>Description <SortButton value={'description'} onClick={setField} setToggleSort={setToggleSort} toggleSort={toggleSort} /> </TH>
         </TR>
       </THEAD>
       <TBODY>
@@ -36,10 +48,12 @@ const THEAD = styled.thead``;
 
 const TBODY = styled.tbody``;
 
-const TR = styled.tr``;
+const TR = styled.tr`
+
+`;
 
 const TH = styled.th`
-  width:100px;
+  width:150px;
   height:50px;
   background-color:lightblue;
 `;

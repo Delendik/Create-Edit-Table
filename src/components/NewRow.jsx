@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 function NewRow(data) {
   const {id, firstName, lastName, email, phone, address, description} = data;
+  
   return(
     <Wrapper>
       <TH>{id}</TH>
