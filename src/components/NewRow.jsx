@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 
-function NewRow(data) {
-  const {id, firstName, lastName, email, phone, address, description} = data;
+function NewRow({id, firstName, lastName, email, phone, address, description, openRow}) {
+  const handleClick = () =>{
+    openRow({id, firstName, lastName, email, phone, address, description})
+  }
   
   return(
-    <Wrapper>
+    <Wrapper onClick={handleClick}>
       <TH>{id}</TH>
       <TH>{firstName}</TH>
       <TH>{lastName}</TH>

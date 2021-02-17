@@ -6,6 +6,7 @@ import Table from './Table';
 import SelectButtons from './SelectButtons';
 import PageSlider from './PageSlider';
 import FindForm from './FindForm';
+import SelectRow from './SekectRow';
 
 function App() {
   const [smallData, setSmallData] = useState([]);
@@ -15,6 +16,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [numberOfPages, setNumberOfPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectRow, setSelectRow] = useState({});
 
   const calculatePages = (data) => {
     if(data.length<50){
@@ -86,19 +88,21 @@ function App() {
     setData(sortArray)
   }
 
+  const openRow = (data) => {
+    setSelectRow(data);
+  };
+
   return (
     <Wrapper>
       <Loader isLoading={loading}> 
         <ClipLoader loading={loading} size={150} />
       </Loader>
-
-        <FindForm findInfo={findInfo} active={isOpenTable}/>
-        <SelectButtons openTable={openTable} isOpenTable={isOpenTable} isLoading={loading} />
-        <PageSlider numberOfPages={numberOfPages} active={isOpenTable} currentPage={currentPage} nextPage={nextPage} previousPage={previousPage} lastPage={lastPage} firstPage={firstPage} />
-        <Table data={data} active={isOpenTable} currentPage={currentPage} />
-        <PageSlider numberOfPages={numberOfPages} active={isOpenTable} currentPage={currentPage} nextPage={nextPage} previousPage={previousPage} lastPage={lastPage} firstPage={firstPage} />
-
-      
+      <FindForm findInfo={findInfo} active={isOpenTable}/>
+      <SelectButtons openTable={openTable} isOpenTable={isOpenTable} isLoading={loading} />
+      <PageSlider numberOfPages={numberOfPages} active={isOpenTable} currentPage={currentPage} nextPage={nextPage} previousPage={previousPage} lastPage={lastPage} firstPage={firstPage} />
+      <Table data={data} active={isOpenTable} currentPage={currentPage} openRow={openRow} />
+      <PageSlider numberOfPages={numberOfPages} active={isOpenTable} currentPage={currentPage} nextPage={nextPage} previousPage={previousPage} lastPage={lastPage} firstPage={firstPage} />
+      <SelectRow selectRow={selectRow} active={isOpenTable} />
     </Wrapper>
   );
 };

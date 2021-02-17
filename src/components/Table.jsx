@@ -3,7 +3,7 @@ import SortButton from './SortButton';
 import NewRow from './NewRow';
 import { useState } from 'react';
 
-function Table({data, active, currentPage}) {
+function Table({data, active, currentPage, openRow}) {
   const [field, setField] = useState('')
   const [toggleSort, setToggleSort] = useState(true);
 
@@ -32,7 +32,7 @@ function Table({data, active, currentPage}) {
       </THEAD>
       <TBODY>
         {
-          dataForDisplay.map(data=><NewRow key={`${data.id}-${data.firstName}-${data.lastName}`} {...data} />)
+          dataForDisplay.map(data=><NewRow key={`${data.id}-${data.firstName}-${data.lastName}`} {...data} openRow={openRow}/>)
         }
       </TBODY>
     </Wrapper>
