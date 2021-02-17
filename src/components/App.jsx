@@ -5,6 +5,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import Table from './Table';
 import SelectButtons from './SelectButtons';
 import PageSlider from './PageSlider';
+import FindForm from './FindForm';
 
 function App() {
   const [smallData, setSmallData] = useState([]);
@@ -75,15 +76,29 @@ function App() {
     setCurrentPage(1);
   };
 
+  const findInfo = (searchText) => {
+    var sortArray = []
+    data.forEach((item) => { 
+      if(Object.values(item).includes(searchText)){
+        sortArray.push(item)
+      }
+    })
+    setData(sortArray)
+  }
+
   return (
     <Wrapper>
       <Loader isLoading={loading}> 
         <ClipLoader loading={loading} size={150} />
       </Loader>
-      <SelectButtons openTable={openTable} isOpenTable={isOpenTable} isLoading={loading} />
-      <PageSlider numberOfPages={numberOfPages} active={isOpenTable} currentPage={currentPage} nextPage={nextPage} previousPage={previousPage} lastPage={lastPage} firstPage={firstPage} />
-      <Table data={data} active={isOpenTable} currentPage={currentPage} />
-      <PageSlider numberOfPages={numberOfPages} active={isOpenTable} currentPage={currentPage} nextPage={nextPage} previousPage={previousPage} lastPage={lastPage} firstPage={firstPage} />
+
+        <FindForm findInfo={findInfo} active={isOpenTable}/>
+        <SelectButtons openTable={openTable} isOpenTable={isOpenTable} isLoading={loading} />
+        <PageSlider numberOfPages={numberOfPages} active={isOpenTable} currentPage={currentPage} nextPage={nextPage} previousPage={previousPage} lastPage={lastPage} firstPage={firstPage} />
+        <Table data={data} active={isOpenTable} currentPage={currentPage} />
+        <PageSlider numberOfPages={numberOfPages} active={isOpenTable} currentPage={currentPage} nextPage={nextPage} previousPage={previousPage} lastPage={lastPage} firstPage={firstPage} />
+
+      
     </Wrapper>
   );
 };
@@ -108,3 +123,4 @@ const Loader = styled.div`
 	right: 0;
 	bottom: 0;
 `;
+

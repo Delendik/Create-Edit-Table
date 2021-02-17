@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import SortButton from './SortButton';
 import NewRow from './NewRow';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 function Table({data, active, currentPage}) {
   const [field, setField] = useState('')
@@ -15,11 +15,8 @@ function Table({data, active, currentPage}) {
   };
 
   let dataForDisplay = data.slice((currentPage-1)*50, currentPage*50)
-  console.log(dataForDisplay)
-  console.log(data)
   dataForDisplay.sort(sortByField(field));
   
-
   return(
     <Wrapper active={active}>
       <THEAD>
