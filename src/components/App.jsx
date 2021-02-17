@@ -13,6 +13,7 @@ function App() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [numberOfPages, setNumberOfPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const calculatePages = (data) => {
     if(data.length<50){
@@ -57,15 +58,32 @@ function App() {
       calculatePages(bigData);
     }
   }
+
+  const nextPage = () => {
+    setCurrentPage(currentPage+1);
+  };
+
+  const previousPage = () => {
+    setCurrentPage(currentPage-1);
+  };
+
+  const lastPage = () => {
+    setCurrentPage(numberOfPages);
+  };
+
+  const firstPage = () => {
+    setCurrentPage(1);
+  };
+
   return (
     <Wrapper>
       <Loader isLoading={loading}> 
         <ClipLoader loading={loading} size={150} />
       </Loader>
       <SelectButtons openTable={openTable} isOpenTable={isOpenTable} isLoading={loading} />
-      <PageSlider numberOfPages={numberOfPages} active={isOpenTable} />
-      <Table data={data} active={isOpenTable} />
-      <PageSlider numberOfPages={numberOfPages} active={isOpenTable} />
+      <PageSlider numberOfPages={numberOfPages} active={isOpenTable} currentPage={currentPage} nextPage={nextPage} previousPage={previousPage} lastPage={lastPage} firstPage={firstPage} />
+      <Table data={data} active={isOpenTable} currentPage={currentPage} />
+      <PageSlider numberOfPages={numberOfPages} active={isOpenTable} currentPage={currentPage} nextPage={nextPage} previousPage={previousPage} lastPage={lastPage} firstPage={firstPage} />
     </Wrapper>
   );
 };

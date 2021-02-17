@@ -3,7 +3,7 @@ import SortButton from './SortButton';
 import NewRow from './NewRow';
 import { useEffect, useState } from 'react';
 
-function Table({data, active}) {
+function Table({data, active, currentPage}) {
   const [field, setField] = useState('')
   const [toggleSort, setToggleSort] = useState(true);
 
@@ -14,8 +14,12 @@ function Table({data, active}) {
     return (a, b) => a[field] > b[field] ? -1 : 1;
   };
 
-  data.sort(sortByField(field));
+  let dataForDisplay = data.slice((currentPage-1)*50, currentPage*50)
+  console.log(dataForDisplay)
+  console.log(data)
+  dataForDisplay.sort(sortByField(field));
   
+
   return(
     <Wrapper active={active}>
       <THEAD>
@@ -31,7 +35,7 @@ function Table({data, active}) {
       </THEAD>
       <TBODY>
         {
-          data.map(data=><NewRow key={`${data.id}-${data.firstName}-${data.lastName}`} {...data} />)
+          dataForDisplay.map(data=><NewRow key={`${data.id}-${data.firstName}-${data.lastName}`} {...data} />)
         }
       </TBODY>
     </Wrapper>
