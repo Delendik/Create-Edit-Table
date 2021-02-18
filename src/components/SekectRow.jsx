@@ -1,20 +1,20 @@
 import styled from 'styled-components';
 
 function SelectRow({selectRow, active}){
-  const {id, firstName, lastName, email, phone, address, description} = selectRow;
-  console.log(selectRow);
+  const {firstName, lastName, address, description} = selectRow;
+
   return(
     <Wrapper active={active}>
       <P>Выбран пользователь <Span>{`${firstName} ${lastName}`}</Span></P>
       <P>Описание:</P>
-      <Textarea value={description} />
+      <Textarea defaultValue={description} />
       <P>Адрес проживания: <Span>{address.streetAddress}</Span> </P>
       <P>Город: <Span>{address.city}</Span></P>
       <P>Провинция/штат: <Span>{address.state}</Span></P>
       <P>Индекс: <Span>{address.zip}</Span></P>
     </Wrapper>
-  )
-}
+  );
+};
 
 export default SelectRow;
 

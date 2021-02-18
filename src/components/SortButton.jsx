@@ -8,8 +8,8 @@ function SortButton({onClick, value, setToggleSort, toggleSort}) {
   };
 
   return(
-    <Wrapper onClick={handleClick} >
-      <Img src={sort} />
+    <Wrapper onClick={handleClick}  >
+      <Img src={sort} toggleSort={toggleSort} />
     </Wrapper>
   );
 };
@@ -27,10 +27,8 @@ const Wrapper = styled.button`
 `;
 
 const Img = styled.img`
-width:40px;
+  width:40px;
   height:40px;
-  object-fit: contain
-  /* :hover {
-  transform: scaleY(-1);
-} */
+  object-fit: contain;
+  transform: ${({toggleSort}) => toggleSort ? 'scaleY(-1)' : 'none'};
 `;

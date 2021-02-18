@@ -36,4 +36,7 @@ const Button = styled.button`
   border: none;
   outline: none;
   border-radius: 10px;
+  :hover{
+    cursor: pointer;
+  }
 `;

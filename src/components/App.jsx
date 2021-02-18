@@ -7,6 +7,7 @@ import SelectButtons from './SelectButtons';
 import PageSlider from './PageSlider';
 import FindForm from './FindForm';
 import SelectRow from './SekectRow';
+import AddRow from './AddRow';
 
 function App() {
   const [smallData, setSmallData] = useState([]);
@@ -16,7 +17,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [numberOfPages, setNumberOfPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectRow, setSelectRow] = useState({});
+  const [selectRow, setSelectRow] = useState({firstName:'', lastName:'', address:'', description:''});
 
   const calculatePages = (data) => {
     if(data.length<50){
@@ -24,7 +25,7 @@ function App() {
     } 
     setNumberOfPages(Math.ceil(data.length/50));    
   };
-// console.log(numberOfPages)
+
   const loadindData = () => {
     Promise.all([
       getSmallData(),
@@ -48,7 +49,6 @@ function App() {
 
   useEffect(() =>{
     loadindData();
-    
   }, []);
 
   const openTable = (sizeOfTable) => {
@@ -92,11 +92,16 @@ function App() {
     setSelectRow(data);
   };
 
+  const addRow = (newData) => {
+    setData([newData, ...data])
+  };
+  
   return (
     <Wrapper>
       <Loader isLoading={loading}> 
         <ClipLoader loading={loading} size={150} />
       </Loader>
+      <AddRow active={isOpenTable} addRow={addRow} />
       <FindForm findInfo={findInfo} active={isOpenTable}/>
       <SelectButtons openTable={openTable} isOpenTable={isOpenTable} isLoading={loading} />
       <PageSlider numberOfPages={numberOfPages} active={isOpenTable} currentPage={currentPage} nextPage={nextPage} previousPage={previousPage} lastPage={lastPage} firstPage={firstPage} />

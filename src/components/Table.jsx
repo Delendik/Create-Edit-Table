@@ -14,9 +14,10 @@ function Table({data, active, currentPage, openRow}) {
     return (a, b) => a[field] > b[field] ? -1 : 1;
   };
 
-  let dataForDisplay = data.slice((currentPage-1)*50, currentPage*50)
-  dataForDisplay.sort(sortByField(field));
-  
+  let dataSort = data.slice((currentPage-1)*50, currentPage*50)
+  dataSort.sort(sortByField(field));
+  let dataForDisplay=dataSort.reverse();
+
   return(
     <Wrapper active={active}>
       <THEAD>
@@ -32,6 +33,7 @@ function Table({data, active, currentPage, openRow}) {
       </THEAD>
       <TBODY>
         {
+          
           dataForDisplay.map(data=><NewRow key={`${data.id}-${data.firstName}-${data.lastName}`} {...data} openRow={openRow}/>)
         }
       </TBODY>
